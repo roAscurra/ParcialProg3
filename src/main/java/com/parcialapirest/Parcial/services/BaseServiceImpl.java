@@ -4,7 +4,10 @@ import com.parcialapirest.Parcial.entities.Base;
 import com.parcialapirest.Parcial.repositories.BaseRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.Id;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -24,6 +27,13 @@ public class BaseServiceImpl<E extends Base, ID extends Serializable> implements
     public List<E> findAll() throws Exception {
         return baseRepository.findAll();
     }
+
+    @Override
+    @Transactional
+    public Page<E> findAll(Pageable pageable) throws Exception {
+        return baseRepository.findAll(pageable);
+    }
+
 
     @Override
     public E findById(ID id) throws Exception {
